@@ -96,7 +96,7 @@ Supported runtime :
 ```javascript
 await put(key:string,value:string)
 ```
-The put() method returns a Promise that you should await on to verify a successful update which resolves with a boolean :
+The put() method returns a Promise that you should await on to verify a successful update which resolves with:
 * true = Update successful
 * false = Update failed
 ### Read key-value pairs
@@ -105,9 +105,8 @@ The put() method returns a Promise that you should await on to verify a successf
 await get(key:string)
 ```
 The get() method returns a promise you can await on to get the value which resolves with:
-* null = The key is not found
-* data = Get the value successful
-* false = Get the value failed
+* data = Get data successful
+* false = Get data failed
 
 ### List keys
 
@@ -125,9 +124,18 @@ await delete(key:string)
 ```
 
 To delete a key-value pair, call the delete() method, return a promise which resolves with:
-* null = The key is not found
 * true = Delete successful
 * false = Delete failed
+
+### Has key-value pairs
+
+```javascript
+await has(key:string)
+```
+
+Has key-value pairs method, return a promise which resolves with:
+* true = Key exist
+* false = Key does not exist
 
 ## License
 

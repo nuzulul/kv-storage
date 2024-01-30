@@ -93,13 +93,12 @@ export class NodeKVStorage{
 		return new Promise((resolve) => {
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			const keyFilePath = this._storageDir+'/'+key
-			fs.stat(keyFilePath, (err)=>{
-				if (err) {resolve(null)}else{
+
+
 				  fs.readFile(keyFilePath,(err,data)=>{
 					if (err) {resolve(false)}else{resolve(data.toString('utf8', 0, data.length))}
 				  });
-				}
-			})
+				
 		})
 	}
 
@@ -107,13 +106,23 @@ export class NodeKVStorage{
 		return new Promise((resolve) => {
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			const keyFilePath = this._storageDir+'/'+key
-			fs.stat(keyFilePath, (err)=>{
-				if (err) {resolve(null)}else{
+			
 				  fs.unlink(keyFilePath,(err)=>{
 					if (err) {resolve(false)}else{resolve(true)}
 				  });
-				}
-			})
+				
+		})
+	}
+
+	public async has(key:string){
+		return new Promise((resolve) => {
+			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
+			const keyFilePath = this._storageDir+'/'+key
+			
+				  fs.stat(keyFilePath, (err)=>{
+					if (err) {resolve(false)}else{resolve(true)}
+				  });
+				
 		})
 	}
 	
