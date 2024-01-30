@@ -1,4 +1,4 @@
-import {KVStorage} from './../src/kv-storage'
+/*import {KVStorage} from './../src/kv-storage'
 
 void async function main() {
 
@@ -13,4 +13,17 @@ void async function main() {
 	console.log(await db.get('yes'))
 	console.log(await db.put('yes1','no1'))
 	console.log(await db.list())
+}()*/
+
+const {KVStorage} = require('./../src/kv-storage')
+
+void async function main() {
+	const db = await KVStorage({
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
 }()

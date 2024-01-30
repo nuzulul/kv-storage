@@ -28,7 +28,7 @@ import {KVStorage} from 'kv-storage'
 //CommonJS import style
 const {KVStorage} = require('kv-storage')
 
-const db = await KVStorage.init({
+const db = await KVStorage({
 	runtime:'node',
 	storageName:'storage'
 })
@@ -37,10 +37,12 @@ const db = await KVStorage.init({
 ## Example Usage
 
 ```javascript
+//ES Modules import style
 import {KVStorage} from 'kv-storage'
 
 void async function main() {
-	const db = await KVStorage.init({
+	const db = await KVStorage({
+		runtime:'node',
 		storageName:'storage'
 	})
 	
@@ -52,10 +54,12 @@ void async function main() {
 ```
 
 ```javascript
+//CommonJS import style
 const {KVStorage} = require('kv-storage')
 
 void async function main() {
-	const db = await KVStorage.init({
+	const db = await KVStorage({
+		runtime:'node',
 		storageName:'storage'
 	})
 	
