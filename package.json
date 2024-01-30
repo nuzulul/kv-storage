@@ -1,0 +1,62 @@
+{
+  "name": "kv-storage",
+  "version": "0.0.1",
+  "description": "Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
+  "main": "dist/cjs/kv-storage.js",
+  "module": "dist/mjs/kv-storage.js",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/kv-storage.js",
+      "require": "./dist/cjs/kv-storage.js"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node public/test/server.js",
+    "start-mjs": "npm run build && node public/test/server-mjs.js",
+    "dev-ts": "nodemon -e js,ts --watch src --watch test --exec \"ts-node test/server\"",
+    "dev": "nodemon -e js,ts --watch src --watch test --exec \"npm run build && npm start\"",
+    "dev-mjs": "nodemon -e js,ts --watch src --watch test --exec \"npm run start-mjs\"",
+    "build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
+    "prepare-build": "if exist .\\dist (echo ok) && mkdir dist && del /S /Q .\\dist\\*",
+    "prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)"
+  },
+  "files": [
+    "dist/",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuzulul/kv-storage.git"
+  },
+  "keywords": [
+    "nodejs",
+    "nosql",
+    "data-storage",
+    "data-store",
+    "node-js",
+    "nosql-database",
+    "file-storage",
+    "kv-storage",
+    "key-value-storage",
+    "node-key-value-storage",
+    "node-kv-storage",
+    "browser-kv-storage",
+    "deno-kv-storage",
+    "bun-kv-storage",
+    "cloudflare-workers"
+  ],
+  "author": "Nuzulul Zulkarnain",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nuzulul/kv-storage/issues"
+  },
+  "homepage": "https://github.com/nuzulul/kv-storage#readme",
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typedoc": "^0.25.7",
+    "typescript": "^5.3.3"
+  }
+}
