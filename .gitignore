@@ -135,3 +135,4 @@ test/mjs/node_modules/
 public/
 package-lock.json
 data/
+docs/
