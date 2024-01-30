@@ -93,6 +93,10 @@ void async function main() {
 
 ## API Reference
 
+### Documentation
+
+[https://nuzulul.github.io/kv-storage/](https://nuzulul.github.io/kv-storage/)
+
 ### Init Parameters
 
 ```javascript
