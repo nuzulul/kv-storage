@@ -5,6 +5,8 @@
         "outDir": "public",
         "target": "es2015",
         "rootDir": ".",
+		"allowImportingTsExtensions": true,
+		"noEmit": true
     },
   "include": ["test","src"],
   "exclude": ["node_modules", "**/*.spec.ts"]

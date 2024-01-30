@@ -16,11 +16,14 @@
     "start": "node public/test/server.js",
     "start-mjs": "npm run build && node public/test/server-mjs.js",
     "dev-ts": "nodemon -e js,ts --watch src --watch test --exec \"ts-node test/server\"",
+	"dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write test/server-deno.ts\"",
     "dev": "nodemon -e js,ts --watch src --watch test --exec \"npm run build && npm start\"",
     "dev-mjs": "nodemon -e js,ts --watch src --watch test --exec \"npm run start-mjs\"",
     "build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
     "prepare-build": "if exist .\\dist (echo ok) && mkdir dist && del /S /Q .\\dist\\*",
-    "prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)"
+    "prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)",
+	"prepare-typedoc": "if not exist .\\docs (mkdir docs) else (rmdir /S /Q .\\docs\\)",
+	"typedoc":"npm run prepare-typedoc && typedoc src/kv-storage.ts src/node-kv-storage.ts src/deno-kv-storage.ts"
   },
   "files": [
     "dist/",

@@ -20,16 +20,17 @@ npm install kv-storage
 ## Initialization
 
 ```javascript
-//ES Modules import style
-import {KVStorage} from 'kv-storage'
-
-	or
-
-//CommonJS import style
+//Node CommonJS import style
 const {KVStorage} = require('kv-storage')
 
+//Node ES Modules import style
+import {KVStorage} from 'kv-storage'
+
+//Deno import style
+import {KVStorage} from 'npm:kv-storage'
+
 const db = await KVStorage({
-	runtime:'node',
+	runtime:'node', //node | deno 
 	storageName:'storage'
 })
 ```
@@ -37,24 +38,7 @@ const db = await KVStorage({
 ## Example Usage
 
 ```javascript
-//ES Modules import style
-import {KVStorage} from 'kv-storage'
-
-void async function main() {
-	const db = await KVStorage({
-		runtime:'node',
-		storageName:'storage'
-	})
-	
-	console.log(await db.put('key','value'))
-	console.log(await db.get('key'))
-	console.log(await db.list())
-	console.log(await db.delete('key'))
-}()
-```
-
-```javascript
-//CommonJS import style
+//Node CommonJS example
 const {KVStorage} = require('kv-storage')
 
 void async function main() {
@@ -67,6 +51,43 @@ void async function main() {
 	console.log(await db.get('key'))
 	console.log(await db.list())
 	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
+}()
+```
+
+```javascript
+//Node ES Modules example
+import {KVStorage} from 'kv-storage'
+
+void async function main() {
+	const db = await KVStorage({
+		runtime:'node',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
+}()
+```
+
+```javascript
+//Deno example
+import {KVStorage} from 'npm:kv-storage'
+
+void async function main() {
+	const db = await KVStorage({
+		runtime:'node',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
 }()
 ```
 
@@ -86,8 +107,8 @@ storageName = Alphanumeric name of storage
 ```
 Supported runtime :
 - [x] `node`
+- [x] `deno` need `--allow-read --allow-write`
 - [ ] `browser`
-- [ ] `deno`
 - [ ] `bun`
 - [ ] `cloudflare-workers`
 - [ ] `memory`

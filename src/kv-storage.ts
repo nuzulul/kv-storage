@@ -25,7 +25,12 @@ export async function KVStorage({
 			})
 			return db
 			break
-		case 'browser':
+		case 'deno':
+			const rundeno = await import('./deno-kv-storage.ts')
+			const dbdeno = await rundeno.DenoKVStorage.init({
+				storageName
+			})
+			return dbdeno
 			break
 		default:
 			showError('Runtime unknown')
