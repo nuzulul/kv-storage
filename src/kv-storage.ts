@@ -1,9 +1,11 @@
 export async function KVStorage({
 	runtime = 'node',
-	storageName = 'storage'
+	storageName = 'storage',
+	databaseName = 'kvstorage'
 	}:{
 		runtime?:string,
-		storageName?:string
+		storageName?:string,
+		databaseName?:string
 	}): Promise<any> {
 
 	function isAlphanumeric(str:string) {
@@ -21,14 +23,16 @@ export async function KVStorage({
 		case 'node':
 			const runtime = await import('./node-kv-storage')
 			const db = await runtime.NodeKVStorage.init({
-				storageName
+				storageName,
+				dataDirName:databaseName
 			})
 			return db
 			break
 		case 'deno':
 			const rundeno = await import('./deno-kv-storage.ts')
 			const dbdeno = await rundeno.DenoKVStorage.init({
-				storageName
+				storageName,
+				dataDirName:databaseName
 			})
 			return dbdeno
 			break

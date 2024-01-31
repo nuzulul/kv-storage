@@ -43,7 +43,7 @@ export class NodeKVStorage{
 				fs.stat(dir, (err)=>{
 					if (err) {
 						fs.mkdir(dir, { recursive: true }, (err,path) => {
-							if (err) {resolve(false)}else{resolve(true)}
+							if (err) {throw err}else{resolve(true)}
 						})
 					}else{resolve(true)}
 				})
@@ -56,27 +56,6 @@ export class NodeKVStorage{
 		let storageDir = _dataDirName+'/'+storageName
 		await makeDir(storageDir)
 		return new NodeKVStorage({storageDir})
-	}
-
-	
-	private async makeDirSync(dir:string){
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, {
-            recursive: true
-        })
-      }
-	}
-	
-	private async makeDir(dir:string): Promise<boolean>{
-		return new Promise((resolve) => {
-			fs.stat(dir, (err)=>{
-				if (err) {
-					fs.mkdir(dir, { recursive: true }, (err,path) => {
-						if (err) {resolve(false)}else{resolve(true)}
-					})
-				}else{resolve(true)}
-			})
-		})
 	}
 	
 	public async put(key:string,value:string){
@@ -129,7 +108,7 @@ export class NodeKVStorage{
 	public async list(){
 		return new Promise((resolve) => {
 			  fs.readdir(this._storageDir,(err,files)=>{
-				if (err) {throw err}else{
+				if (err) {resolve(false)}else{
 					let result = {
 						keys:files,
 						complete:true

@@ -136,3 +136,4 @@ public/
 package-lock.json
 data/
 docs/
+kvstorage/

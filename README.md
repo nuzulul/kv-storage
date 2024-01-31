@@ -79,7 +79,7 @@ import {KVStorage} from 'npm:kv-storage'
 
 void async function main() {
 	const db = await KVStorage({
-		runtime:'node',
+		runtime:'deno',
 		storageName:'storage'
 	})
 	
@@ -121,17 +121,13 @@ Supported runtime :
 ```javascript
 await put(key:string,value:string)
 ```
-The put() method returns a Promise that you should await on to verify a successful update which resolves with:
-* true = Update successful
-* false = Update failed
+The put() method returns a Promise that you should await on to verify a successful update
 ### Read key-value pairs
 
 ```javascript
 await get(key:string)
 ```
-The get() method returns a promise you can await on to get the value which resolves with:
-* data = Get data successful
-* false = Get data failed
+The get() method returns a promise you can await on to get the value
 
 ### List keys
 
@@ -148,9 +144,7 @@ Use a list operation to view all the keys that live in a given storage, return a
 await delete(key:string)
 ```
 
-To delete a key-value pair, call the delete() method, return a promise which resolves with:
-* true = Delete successful
-* false = Delete failed
+To delete a key-value pair, call the delete() method
 
 ### Has key-value pairs
 
@@ -158,9 +152,7 @@ To delete a key-value pair, call the delete() method, return a promise which res
 await has(key:string)
 ```
 
-Has key-value pairs method, return a promise which resolves with:
-* true = Key exist
-* false = Key does not exist
+To check for the existence of a key
 
 ## License
 
