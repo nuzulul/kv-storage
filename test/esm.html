@@ -1,0 +1,24 @@
+<html>
+<body>
+<p>open console</p>
+<script type="module">
+import {KVStorage} from './../public/src/kv-storage.js'
+
+void async function main() {
+	
+	const db = await KVStorage({
+		runtime:'browser',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('yes','no'))
+	console.log(await db.get('yes'))
+	console.log(await db.delete('yes'))
+	console.log(await db.get('yes'))
+	console.log(await db.put('yes1','no1'))
+	console.log(await db.list())
+	console.log(await db.has('key'))
+}()
+</script>	
+</body>
+</html>

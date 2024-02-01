@@ -1,6 +1,6 @@
 {
   "name": "kv-storage",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
   "main": "dist/cjs/kv-storage.js",
   "module": "dist/mjs/kv-storage.js",
@@ -16,18 +16,20 @@
     "start": "node public/test/server.js",
     "start-mjs": "npm run build && node public/test/server-mjs.js",
     "dev-ts": "nodemon -e js,ts --watch src --watch test --exec \"ts-node test/server\"",
-	"dev-browser": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-browser.json && ts-node test/server-browser.ts\"",
-	"dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write --unstable-sloppy-imports test/server-deno.ts\"",
+    "dev-browser": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-browser.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.js && ts-node test/server-browser.ts\"",
+    "dev-umd": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.js && ts-node test/server-browser.ts\"",
+    "dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write --unstable-sloppy-imports test/server-deno.ts\"",
     "dev": "nodemon -e js,ts --watch src --watch test --exec \"npm run build && npm start\"",
     "dev-mjs": "nodemon -e js,ts --watch src --watch test --exec \"npm run start-mjs\"",
-    "build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
+    "build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.umd.js && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
     "prepare-build": "if exist .\\dist (echo ok) && mkdir dist && del /S /Q .\\dist\\*",
     "prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)",
-	"prepare-typedoc": "if not exist .\\docs (mkdir docs) else (rmdir /S /Q .\\docs\\)",
-	"prepare-public": "if not exist .\\public (mkdir public) else (rmdir /S /Q .\\public\\)",
-	"typedoc":"npm run prepare-typedoc && typedoc src/kv-storage.ts src/node-kv-storage.ts src/deno-kv-storage.ts src/browser-kv-storage.ts",
+    "prepare-typedoc": "if not exist .\\docs (mkdir docs) else (rmdir /S /Q .\\docs\\)",
+    "prepare-public": "if not exist .\\public (mkdir public) else (rmdir /S /Q .\\public\\)",
+    "typedoc": "npm run prepare-typedoc && typedoc src/kv-storage.ts src/node-kv-storage.ts src/deno-kv-storage.ts src/browser-kv-storage.ts",
     "gh-deploy": "git push origin :gh-pages && git subtree push --prefix docs origin gh-pages",
-    "gh-deploy-init": "git push origin && git subtree push --prefix docs origin gh-pages"
+    "gh-deploy-init": "git push origin && git subtree push --prefix docs origin gh-pages",
+    "gh-deploydoc": "npm run typedoc && git add docs -f && git commit -m \"docs\" && npm run gh-deploy && git reset --soft HEAD~ && git restore --staged ."
   },
   "files": [
     "dist/",
@@ -61,8 +63,11 @@
   },
   "homepage": "https://github.com/nuzulul/kv-storage#readme",
   "devDependencies": {
+    "@rollup/plugin-typescript": "^11.1.6",
     "nodemon": "^3.0.3",
+    "rollup": "^4.9.6",
     "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
     "typedoc": "^0.25.7",
     "typescript": "^5.3.3"
   }

@@ -40,6 +40,7 @@ export async function KVStorage({
 			let browserpkg = './browser-kv-storage'
 			if(window)browserpkg = './browser-kv-storage.js'
 			const runbrowser = await import(browserpkg)
+			//const runbrowser = await import('./browser-kv-storage')
 			const dbbrowser = await runbrowser.BrowserKVStorage.init({
 				databaseName,
 				storageName

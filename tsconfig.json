@@ -1,11 +1,26 @@
 {
-    "extends": "./tsconfig-base.json",
-    "compilerOptions": {
-        "module": "commonjs",
-        "outDir": "public",
-        "target": "es2015",
-        "rootDir": "."
-    },
-  "include": ["test","src"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "compilerOptions": {                  
+    "target": "ES2019",
+    "module": "esnext",
+    "outDir": "public",
+    "rootDir": "src",
+        
+    "strict": true,
+          
+    "noUnusedLocals": false ,
+    "noUnusedParameters": false ,
+    "noImplicitReturns": true ,
+    "noFallthroughCasesInSwitch": true ,
+    "moduleResolution": "node",
+  
+    "esModuleInterop": true ,
+        
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "node_modules",
+    "public",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

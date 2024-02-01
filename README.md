@@ -14,8 +14,14 @@ Create data storage that uses a simple key-value method for Node, Browser, Deno,
 [https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld](https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld)
 
 ## Installation
+
+NPM (node, browser, deno)
 ```javascript
 npm install kv-storage
+```
+CDN (browser)
+```javascript
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -31,7 +37,15 @@ import {KVStorage} from 'kv-storage'
 import {KVStorage} from 'npm:kv-storage'
 
 const db = await KVStorage({
-	runtime:'node', //node | deno | browser
+	runtime:'node', //node | browser| deno
+	storageName:'storage'
+})
+```
+```javascript
+//Browser using CDN
+
+const db = await kvstorage.KVStorage({
+	runtime:'browser',
 	storageName:'storage'
 })
 ```
@@ -73,7 +87,45 @@ void async function main() {
 	console.log(await db.has('key'))
 }()
 ```
+```javascript
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/umd/kv-storage.js"></script>
+<script>
+//Browser using CDN example
 
+void async function main() {
+	const db = await kvstorage.KVStorage({
+		runtime:'browser',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
+}()
+</script>
+```
+
+```javascript
+<script type="module">
+//Browser ES Modules example
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/mjs/kv-storage.js'
+
+void async function main() {
+	const db = await KVStorage({
+		runtime:'browser',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
+}()
+</script>
+```
 ```javascript
 //Deno example
 import {KVStorage} from 'npm:kv-storage'
@@ -92,33 +144,13 @@ void async function main() {
 }()
 ```
 
-```javascript
-<script type="module">
-//Directly in Browser example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.3/dist/mjs/kv-storage.js'
-
-void async function main() {
-	const db = await KVStorage({
-		runtime:'browser',
-		storageName:'storage'
-	})
-	
-	console.log(await db.put('key','value'))
-	console.log(await db.get('key'))
-	console.log(await db.list())
-	console.log(await db.delete('key'))
-	console.log(await db.has('key'))
-}()
-</script>
-```
-
 ## API Reference
 
 ### Documentation
 
 [https://nuzulul.github.io/kv-storage/](https://nuzulul.github.io/kv-storage/)
 
-### Init Parameters
+### Initialization parameters
 
 ```javascript
 await init({
@@ -128,12 +160,12 @@ await init({
 ```
 ```
 runtime =  Javascript runtime 
-storageName = Alphanumeric name of storage
+storageName = Alphanumeric storage name
 ```
 Supported runtime :
 - [x] `node`
 - [x] `deno` need `--allow-read --allow-write`
-- [x] `browser`
+- [x] `browser` use IndexedDB
 - [ ] `bun`
 - [ ] `cloudflare-workers`
 - [ ] `memory`

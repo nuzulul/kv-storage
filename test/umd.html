@@ -1,12 +1,12 @@
 <html>
 <body>
-<p>123</p>
-<script type="module">
-import {KVStorage} from './../public/src/kv-storage.js'
+<p>open console</p>
+<script src="./../public/umd/kv-storage.umd.js"></script>
+<script>
 
 void async function main() {
 	
-	const db = await KVStorage({
+	const db = await kvstorage.KVStorage({
 		runtime:'browser',
 		storageName:'storage'
 	})
