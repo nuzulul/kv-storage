@@ -3,7 +3,7 @@
     "target": "ES2019",
     "module": "esnext",
     "outDir": "public",
-    "rootDir": ".",
+    "rootDir": "src",
         
     "strict": true,
           

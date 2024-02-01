@@ -18,7 +18,7 @@ export default [
 	  inlineDynamicImports:true,
     },
   ],
-  plugins: [typescript()],
+  plugins: [typescript()]
 },
 {
   input: 'src/browser-kv-storage.ts',
@@ -29,6 +29,6 @@ export default [
       format: 'es',
     },
   ],
-  plugins: [typescript()],
+  plugins: [typescript()]
 }
 ]
