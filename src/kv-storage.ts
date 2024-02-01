@@ -1,7 +1,7 @@
 export async function KVStorage({
 	runtime = 'node',
-	storageName = 'storage',
-	databaseName = 'kvstorage'
+	databaseName = 'kvstorage',
+	storageName = 'storage'
 	}:{
 		runtime?:string,
 		storageName?:string,
@@ -21,20 +21,30 @@ export async function KVStorage({
 
 	switch(runtime.toLowerCase()){
 		case 'node':
-			const runtime = await import('./node-kv-storage')
-			const db = await runtime.NodeKVStorage.init({
-				storageName,
-				dataDirName:databaseName
+			const runnode = await import('./node-kv-storage')
+			const dbnode = await runnode.NodeKVStorage.init({
+				dataDirName:databaseName,
+				storageName
 			})
-			return db
+			return dbnode
 			break
 		case 'deno':
-			const rundeno = await import('./deno-kv-storage.ts')
+			const rundeno = await import('./deno-kv-storage')
 			const dbdeno = await rundeno.DenoKVStorage.init({
-				storageName,
-				dataDirName:databaseName
+				dataDirName:databaseName,
+				storageName
 			})
 			return dbdeno
+			break
+		case 'browser':
+			let browserpkg = './browser-kv-storage'
+			if(window)browserpkg = './browser-kv-storage.js'
+			const runbrowser = await import(browserpkg)
+			const dbbrowser = await runbrowser.BrowserKVStorage.init({
+				databaseName,
+				storageName
+			})
+			return dbbrowser
 			break
 		default:
 			showError('Runtime unknown')

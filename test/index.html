@@ -1,9 +1,13 @@
-import {KVStorage} from './../src/kv-storage'
+<html>
+<body>
+<p>123</p>
+<script type="module">
+import {KVStorage} from './../public/src/kv-storage.js'
 
 void async function main() {
-
+	
 	const db = await KVStorage({
-		runtime:'deno',
+		runtime:'browser',
 		storageName:'storage'
 	})
 	
@@ -15,3 +19,6 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.has('key'))
 }()
+</script>	
+</body>
+</html>

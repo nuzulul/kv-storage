@@ -1,6 +1,8 @@
 # kv-storage
 Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers
 
+[![NPM](https://nodei.co/npm/kv-storage.png?mini=true)](https://www.npmjs.com/package/kv-storage)
+[![npm version](https://badge.fury.io/js/kv-storage.svg)](https://www.npmjs.com/package/kv-storage)
 ## Features
 
 * ✅ 0 Dependencies
@@ -12,7 +14,6 @@ Create data storage that uses a simple key-value method for Node, Browser, Deno,
 [https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld](https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld)
 
 ## Installation
-
 ```javascript
 npm install kv-storage
 ```
@@ -23,14 +24,14 @@ npm install kv-storage
 //Node CommonJS import style
 const {KVStorage} = require('kv-storage')
 
-//Node ES Modules import style
+//Node & Browser ES Modules import style
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
 import {KVStorage} from 'npm:kv-storage'
 
 const db = await KVStorage({
-	runtime:'node', //node | deno 
+	runtime:'node', //node | deno | browser
 	storageName:'storage'
 })
 ```
@@ -91,6 +92,26 @@ void async function main() {
 }()
 ```
 
+```javascript
+<script type="module">
+//Directly in Browser example
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.3/dist/mjs/kv-storage.js'
+
+void async function main() {
+	const db = await KVStorage({
+		runtime:'browser',
+		storageName:'storage'
+	})
+	
+	console.log(await db.put('key','value'))
+	console.log(await db.get('key'))
+	console.log(await db.list())
+	console.log(await db.delete('key'))
+	console.log(await db.has('key'))
+}()
+</script>
+```
+
 ## API Reference
 
 ### Documentation
@@ -112,7 +133,7 @@ storageName = Alphanumeric name of storage
 Supported runtime :
 - [x] `node`
 - [x] `deno` need `--allow-read --allow-write`
-- [ ] `browser`
+- [x] `browser`
 - [ ] `bun`
 - [ ] `cloudflare-workers`
 - [ ] `memory`
@@ -121,13 +142,13 @@ Supported runtime :
 ```javascript
 await put(key:string,value:string)
 ```
-The put() method returns a Promise that you should await on to verify a successful update
+The put() method returns a Promise that you should await on to verify a successful update, resolve to `true` or `false`
 ### Read key-value pairs
 
 ```javascript
 await get(key:string)
 ```
-The get() method returns a promise you can await on to get the value
+The get() method returns a promise you can await on to get the value, resolve to the value or `false`
 
 ### List keys
 
@@ -144,7 +165,7 @@ Use a list operation to view all the keys that live in a given storage, return a
 await delete(key:string)
 ```
 
-To delete a key-value pair, call the delete() method
+To delete a key-value pair, call the delete() method, resolve to `true` or `false`
 
 ### Has key-value pairs
 
@@ -152,7 +173,7 @@ To delete a key-value pair, call the delete() method
 await has(key:string)
 ```
 
-To check for the existence of a key
+To check for the existence of a key, resolve to `true` or `false`
 
 ## License
 

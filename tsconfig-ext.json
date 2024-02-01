@@ -4,7 +4,9 @@
         "module": "commonjs",
         "outDir": "public",
         "target": "es2015",
-        "rootDir": "."
+        "rootDir": ".",
+		"allowImportingTsExtensions": true,
+		"noEmit": true
     },
   "include": ["test","src"],
   "exclude": ["node_modules", "**/*.spec.ts"]
