@@ -36,6 +36,14 @@ export async function KVStorage({
 			})
 			return dbdeno
 			break
+		case 'bun':
+			const runbun = await import('./bun-kv-storage')
+			const dbbun = await runbun.BunKVStorage.init({
+				dataDirName:databaseName,
+				storageName
+			})
+			return dbbun
+			break
 		case 'browser':
 			let browserpkg = './browser-kv-storage'
 			if(window)browserpkg = './browser-kv-storage.js'

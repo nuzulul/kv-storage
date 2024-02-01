@@ -15,7 +15,7 @@ Create data storage that uses a simple key-value method for Node, Browser, Deno,
 
 ## Installation
 
-NPM (node, browser, deno)
+NPM (node, browser, deno, bun)
 ```javascript
 npm install kv-storage
 ```
@@ -26,21 +26,24 @@ CDN (browser)
 
 ## Initialization
 
+NPM
+
 ```javascript
-//Node CommonJS import style
+//Node & Bun CommonJS import style
 const {KVStorage} = require('kv-storage')
 
-//Node & Browser ES Modules import style
+//Node, Browser & Bun ES Modules import style
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
 import {KVStorage} from 'npm:kv-storage'
 
 const db = await KVStorage({
-	runtime:'node', //node | browser| deno
+	runtime:'node', //node | browser | deno | bun
 	storageName:'storage'
 })
 ```
+CDN
 ```javascript
 //Browser using CDN
 
@@ -53,12 +56,12 @@ const db = await kvstorage.KVStorage({
 ## Example Usage
 
 ```javascript
-//Node CommonJS example
+//Node & Bun CommonJS example
 const {KVStorage} = require('kv-storage')
 
 void async function main() {
 	const db = await KVStorage({
-		runtime:'node',
+		runtime:'node',//node | bun
 		storageName:'storage'
 	})
 	
@@ -71,12 +74,12 @@ void async function main() {
 ```
 
 ```javascript
-//Node ES Modules example
+//Node & Bun ES Modules example
 import {KVStorage} from 'kv-storage'
 
 void async function main() {
 	const db = await KVStorage({
-		runtime:'node',
+		runtime:'node',//node | bun
 		storageName:'storage'
 	})
 	
@@ -166,7 +169,7 @@ Supported runtime :
 - [x] `node`
 - [x] `deno` need `--allow-read --allow-write`
 - [x] `browser` use IndexedDB
-- [ ] `bun`
+- [x] `bun`
 - [ ] `cloudflare-workers`
 - [ ] `memory`
 ### Write key-value pairs
