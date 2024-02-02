@@ -1,6 +1,6 @@
 {
   "name": "kv-storage",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
   "main": "dist/cjs/kv-storage.js",
   "module": "dist/mjs/kv-storage.js",
@@ -21,6 +21,7 @@
     "dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write --unstable-sloppy-imports test/server-deno.ts\"",
     "dev": "nodemon -e js,ts --watch src --watch test --exec \"npm run build && npm start\"",
     "dev-mjs": "nodemon -e js,ts --watch src --watch test --exec \"npm run start-mjs\"",
+	"dev-cf": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-browser.json && wrangler dev --env dev\"",
     "build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.umd.js && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
     "prepare-build": "if exist .\\dist (echo ok) && mkdir dist && del /S /Q .\\dist\\*",
     "prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)",
@@ -69,6 +70,7 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
     "typedoc": "^0.25.7",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "wrangler": "^3.26.0"
   }
 }

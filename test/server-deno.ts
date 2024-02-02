@@ -14,4 +14,5 @@ void async function main() {
 	console.log(await db.put('yes1','no1'))
 	console.log(await db.list())
 	console.log(await db.has('key'))
+	console.log(typeof module)
 }()

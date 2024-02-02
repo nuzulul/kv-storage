@@ -1,0 +1,16 @@
+name = "hookapi"
+main = "test/test-cf/server-cf.ts"
+compatibility_date = "2024-2-1"
+
+[[ d1_databases ]]
+binding = "D1"
+database_name = "kv-storage"
+database_id = "8cf9edd1-1ac4-4075-918b-29445e49be59"
+
+[env]
+
+  [env.dev] 
+
+    d1_databases = [
+      { binding = "D1", database_name = "kv-storage", database_id = "8cf9edd1-1ac4-4075-918b-29445e49be59" }
+    ]

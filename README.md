@@ -15,7 +15,7 @@ Create data storage that uses a simple key-value method for Node, Browser, Deno,
 
 ## Installation
 
-NPM (node, browser, deno, bun)
+NPM (node, browser, deno, bun, cloudflare)
 ```javascript
 npm install kv-storage
 ```
@@ -32,7 +32,7 @@ NPM
 //Node & Bun CommonJS import style
 const {KVStorage} = require('kv-storage')
 
-//Node, Browser & Bun ES Modules import style
+//Node, Browser, Bun & Cloudflare ES Modules import style
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
@@ -41,6 +41,12 @@ import {KVStorage} from 'npm:kv-storage'
 const db = await KVStorage({
 	runtime:'node', //node | browser | deno | bun
 	storageName:'storage'
+})
+
+const db = await KVStorage({
+	runtime:'cloudflare',
+	storageName:'storage',
+	databaseBindings:env.D1 //Cloudflare D1 database bindings env
 })
 ```
 CDN
@@ -147,6 +153,36 @@ void async function main() {
 }()
 ```
 
+```javascript
+//Cloudflare workers example
+import {KVStorage} from 'kv-storage'
+
+export default { 
+	async fetch(request: Request, env: Env): Promise<Response> { 
+
+		const db = await KVStorage({
+			runtime:'cloudflare',
+			storageName:'storage',
+			databaseBindings:env.D1
+		})
+		
+		let data = []
+		
+		data.push(await db.put('key','value'))
+		
+		data.push(await db.get('key'))
+		
+		data.push(await db.has('key'))
+		
+		data.push(await db.list())
+		
+		data.push(await db.delete('key'))
+		
+		return new Response(JSON.stringify(data)) 
+	} 
+}
+```
+
 ## API Reference
 
 ### Documentation
@@ -158,20 +194,22 @@ void async function main() {
 ```javascript
 await init({
 	runtime?:string,
-	storageName?:string 
+	storageName?:string,
+	databaseBindings?:any //Cloudflare only
 })
 ```
 ```
 runtime =  Javascript runtime 
 storageName = Alphanumeric storage name
+databaseBindings = Cloudflare D1 database bindings env
 ```
 Supported runtime :
 - [x] `node`
 - [x] `deno` need `--allow-read --allow-write`
 - [x] `browser` use IndexedDB
 - [x] `bun`
-- [ ] `cloudflare-workers`
-- [ ] `memory`
+- [x] `cloudflare-workers` use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database)
+
 ### Write key-value pairs
 
 ```javascript

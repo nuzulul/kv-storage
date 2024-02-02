@@ -137,3 +137,5 @@ package-lock.json
 data/
 docs/
 kvstorage/
+.dev.vars
+.wrangler/

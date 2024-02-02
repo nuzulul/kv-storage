@@ -14,6 +14,10 @@ void async function main() {
 	console.log(await db.put('yes1','no1'))
 	console.log(await db.list())
 	console.log(await db.has('key'))
+	console.log(typeof window)
+	if (typeof window !== "undefined" && typeof window.document !== "undefined") {
+	  // browser
+	}	
 }()
 
 /*const {KVStorage} = require('./../src/kv-storage')
