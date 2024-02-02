@@ -158,7 +158,7 @@ void async function main() {
 import {KVStorage} from 'kv-storage'
 
 export default { 
-	async fetch(request: Request, env: Env): Promise<Response> { 
+	async fetch(request, env) { 
 
 		const db = await KVStorage({
 			runtime:'cloudflare',
@@ -166,19 +166,13 @@ export default {
 			databaseBindings:env.D1
 		})
 		
-		let data = []
-		
+		let data = []		
 		data.push(await db.put('key','value'))
-		
 		data.push(await db.get('key'))
-		
 		data.push(await db.has('key'))
-		
 		data.push(await db.list())
-		
 		data.push(await db.delete('key'))
-		
-		return new Response(JSON.stringify(data)) 
+		return new Response(JSON.stringify(data, null, 2)) 
 	} 
 }
 ```
