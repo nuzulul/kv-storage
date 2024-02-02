@@ -133,7 +133,7 @@ class CloudflareKVStorage{
 			if(values == null){
 			  const stmt = this._databaseBindings.prepare('INSERT INTO '+this._storageName+' (key,value) VALUES (?1,?2)').bind(key,value);
 			  const values = await stmt.run()
-			  return values.succes
+			  return values.success
 			}else{
 			  const stmt = this._databaseBindings.prepare('UPDATE '+this._storageName+' SET value = ?2 WHERE key = ?1').bind(key,value);
 			  const values = await stmt.run()
@@ -163,14 +163,8 @@ class CloudflareKVStorage{
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			
 			const stmt = this._databaseBindings.prepare('DELETE FROM '+this._storageName+' WHERE key = ?1').bind(key);
-			const values = await stmt.first();
-			let output
-			if(values == null){
-			  output = false
-			} else {
-			  output = true
-			}
-			return output				
+			const values = await stmt.run();
+			return values.success				
 		
 	}
 
@@ -179,9 +173,9 @@ class CloudflareKVStorage{
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			
 			const stmt = this._databaseBindings.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
-			const values = await stmt.first();
+			const values = await stmt.run();
 			let output
-			if(values == null){
+			if(values.results == 0){
 			  output = false
 			} else {
 			  output = true

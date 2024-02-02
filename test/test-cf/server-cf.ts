@@ -11,19 +11,23 @@ export default {
 		
 		let data = []
 		
-		data.push(await db.put('yes','no'))
+		data.push({put:await db.put('yes','no')})
 		
-		data.push(await db.get('yes'))
+		data.push({get:await db.get('yes')})
 		
-		data.push(await db.has('yes'))
+		data.push({has:await db.has('yes')})
 		
-		data.push(await db.put('yes1','no1'))
+		data.push({put:await db.put('yes1','no1')})
 		
-		data.push(await db.list())
+		data.push({list:await db.list()})
 		
-		data.push(await db.delete('yes'))
+		data.push({delete:await db.delete('yes')})
 		
-		data.push(await db.list())
+		data.push({list:await db.list()})
+		
+		data.push({delete:await db.delete('yes2')})
+		
+		data.push({get:await db.get('yes2')})
 		
 		return new Response(JSON.stringify(data, null, 2)) 
 	} 
