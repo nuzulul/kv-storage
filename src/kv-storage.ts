@@ -25,8 +25,15 @@ export async function KVStorage({
 	switch(runtime.toLowerCase()){
 		case 'node':
 		    if(typeof caches === "undefined" && typeof global !== "undefined" && typeof window === "undefined"){
-				let nodepkg = './kv-storage-module'
-				const runnode = await import(nodepkg)
+                let runnode;
+                try {
+                    const url = './kv-storage-module';
+                    runnode = await import(url);
+                }
+                catch {
+                    const url = './kv-storage-module.js';
+                    runnode = await import(url);
+                }
 				const dbnode = await runnode.KVStorageModule.init({
 					dataDirName:databaseName,
 					storageName
@@ -35,7 +42,7 @@ export async function KVStorage({
 			}
 			break
 		case 'deno':
-			if(typeof caches !== "undefined" && typeof global === "undefined" && typeof window !== "undefined"){
+			if((typeof caches !== "undefined" && typeof global !== "undefined" && typeof window === "undefined")||(typeof caches !== "undefined" && typeof global === "undefined" && typeof window !== "undefined")){
 				let rundeno
 				try{
 					const url = './kv-storage-module.ts'
@@ -53,8 +60,15 @@ export async function KVStorage({
 			break
 		case 'bun':
 			if(typeof caches === "undefined" && typeof global !== "undefined" && typeof window === "undefined"){
-				let bunpkg = './kv-storage-module'
-				const runbun = await import(bunpkg)
+                let runbun;
+                try {
+                    const url = './kv-storage-module';
+                    runbun = await import(url);
+                }
+                catch {
+                    const url = './kv-storage-module.js';
+                    runbun = await import(url);
+                }
 				const dbbun = await runbun.KVStorageModule.init({
 					dataDirName:databaseName,
 					storageName

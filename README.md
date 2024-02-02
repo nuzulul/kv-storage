@@ -21,7 +21,7 @@ npm install kv-storage
 ```
 CDN (browser)
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -32,11 +32,11 @@ NPM
 //Node & Bun CommonJS import style
 const {KVStorage} = require('kv-storage')
 
-//Node, Browser, Bun & Cloudflare ES Modules import style
+//Node, Browser, Deno, Bun & Cloudflare ES Modules import style
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
-import {KVStorage} from 'npm:kv-storage'
+import {KVStorage} from 'npm:kv-storage@0.0.7'
 
 //Node, Browser, Deno & Bun Initialization
 const db = await KVStorage({
@@ -82,7 +82,7 @@ void async function main() {
 ```
 
 ```javascript
-//Node & Bun ES Modules example
+//Node, Deno & Bun ES Modules example
 import {KVStorage} from 'kv-storage'
 
 void async function main() {
@@ -99,7 +99,7 @@ void async function main() {
 }()
 ```
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/umd/kv-storage.js"></script>
 <script>
 //Browser using CDN example
 
@@ -121,7 +121,7 @@ void async function main() {
 ```javascript
 <script type="module">
 //Browser ES Modules example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/mjs/kv-storage.js'
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/mjs/kv-storage.js'
 
 void async function main() {
 	const db = await KVStorage({
@@ -139,7 +139,7 @@ void async function main() {
 ```
 ```javascript
 //Deno example
-import {KVStorage} from 'npm:kv-storage'
+import {KVStorage} from 'npm:kv-storage@0.0.7'
 
 void async function main() {
 	const db = await KVStorage({
