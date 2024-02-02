@@ -13,16 +13,5 @@ export default [
     }
   ],
   plugins: [typescript()],
-},
-{
-  input: 'src/browser-kv-storage.ts',
-  exclude:["test","src","**/*.d.ts"],
-  output: [
-    {
-      file: 'dist/umd/browser-kv-storage.js',
-      format: 'es',
-    },
-  ],
-  plugins: [typescript()],
 }
 ]

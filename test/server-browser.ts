@@ -46,10 +46,11 @@ const server = http.createServer(async(request:any,response:any)=>{
 		fs.readFile(filePath, function(error:any, content:any) {
 			if (error) {
 				if(error.code == 'ENOENT'){
-					fs.readFile('./404.html', function( content:any) {
+					//fs.readFile('./404.html', function( content:any) {
+						content:'404'
 						response.writeHead(200, { 'Content-Type': contentType });
 						response.end(content, 'utf-8');
-					});
+					//});
 				}
 				else {
 					response.writeHead(500);

@@ -21,7 +21,7 @@ npm install kv-storage
 ```
 CDN (browser)
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -97,7 +97,7 @@ void async function main() {
 }()
 ```
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/umd/kv-storage.js"></script>
 <script>
 //Browser using CDN example
 
@@ -119,7 +119,7 @@ void async function main() {
 ```javascript
 <script type="module">
 //Browser ES Modules example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.4/dist/mjs/kv-storage.js'
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/mjs/kv-storage.js'
 
 void async function main() {
 	const db = await KVStorage({
@@ -202,7 +202,7 @@ Supported runtime :
 - [x] `deno` need `--allow-read --allow-write`
 - [x] `browser` use IndexedDB
 - [x] `bun`
-- [x] `cloudflare-workers` use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database)
+- [x] `cloudflare` workers use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database)
 
 ### Write key-value pairs
 

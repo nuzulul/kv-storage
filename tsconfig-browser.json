@@ -7,5 +7,5 @@
         "rootDir": "."
     },
   "include": ["test","src"],
-  "exclude": ["test/test-cf","node_modules", "**/*.spec.ts"]
+  "exclude": ["test/test-cf","test/test-deno","node_modules", "**/*.spec.ts"]
 }
