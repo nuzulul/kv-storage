@@ -1,6 +1,6 @@
-import fs from 'fs'
+import fs from 'node:fs'
 
-export class BunKVStorage{
+export class KVStorageModule{
 
 	_storageDir:string
 	
@@ -28,7 +28,7 @@ export class BunKVStorage{
 	}:{
 		dataDirName?:string,
 		storageName:string
-	}): Promise<BunKVStorage>{
+	}): Promise<KVStorageModule>{
 	
 		function isAlphanumeric(str:string) {
 		  return /^[a-zA-Z0-9]+$/.test(str);
@@ -55,7 +55,7 @@ export class BunKVStorage{
 		let _dataDirName = "./"+dataDirName
 		let storageDir = _dataDirName+'/'+storageName
 		await makeDir(storageDir)
-		return new BunKVStorage({storageDir})
+		return new KVStorageModule({storageDir})
 	}
 	
 	public async put(key:string,value:string){

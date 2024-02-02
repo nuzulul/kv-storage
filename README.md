@@ -21,7 +21,7 @@ npm install kv-storage
 ```
 CDN (browser)
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -38,15 +38,17 @@ import {KVStorage} from 'kv-storage'
 //Deno import style
 import {KVStorage} from 'npm:kv-storage'
 
+//Node, Browser, Deno & Bun Initialization
 const db = await KVStorage({
 	runtime:'node', //node | browser | deno | bun
 	storageName:'storage'
 })
 
+//Cloudflare Initialization
 const db = await KVStorage({
 	runtime:'cloudflare',
-	storageName:'storage',
-	databaseBindings:env.D1 //Cloudflare D1 database bindings env
+	storageName:'storage', //Cloudflare D1 database name
+	databaseBinding:env.D1 //Cloudflare D1 database binding env
 })
 ```
 CDN
@@ -97,7 +99,7 @@ void async function main() {
 }()
 ```
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/umd/kv-storage.js"></script>
 <script>
 //Browser using CDN example
 
@@ -119,7 +121,7 @@ void async function main() {
 ```javascript
 <script type="module">
 //Browser ES Modules example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.5/dist/mjs/kv-storage.js'
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.6/dist/mjs/kv-storage.js'
 
 void async function main() {
 	const db = await KVStorage({
@@ -162,8 +164,8 @@ export default {
 
 		const db = await KVStorage({
 			runtime:'cloudflare',
-			storageName:'storage',
-			databaseBindings:env.D1
+			storageName:'storage', //Cloudflare D1 database name
+			databaseBinding:env.D1 //Cloudflare D1 database binding env
 		})
 		
 		let data = []		
@@ -189,20 +191,20 @@ export default {
 await init({
 	runtime?:string,
 	storageName?:string,
-	databaseBindings?:any //Cloudflare only
+	databaseBinding?:any
 })
 ```
 ```
 runtime =  Javascript runtime 
 storageName = Alphanumeric storage name
-databaseBindings = Cloudflare D1 database bindings env
+databaseBinding = Cloudflare only D1 database binding env
 ```
 Supported runtime :
 - [x] `node`
 - [x] `deno` need `--allow-read --allow-write`
 - [x] `browser` use IndexedDB
 - [x] `bun`
-- [x] `cloudflare` workers use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database)
+- [x] `cloudflare` workers use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database) example [wrangler.toml](https://github.com/nuzulul/kv-storage/blob/main/wrangler.toml)
 
 ### Write key-value pairs
 

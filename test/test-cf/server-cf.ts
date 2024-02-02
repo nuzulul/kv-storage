@@ -6,7 +6,7 @@ export default {
 		const db = await KVStorage({
 			runtime:'cloudflare',
 			storageName:'storage',
-			databaseBindings:env.D1
+			databaseBinding:env.D1
 		})
 		
 		let data = []

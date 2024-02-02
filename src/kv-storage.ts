@@ -2,12 +2,12 @@ export async function KVStorage({
 	runtime = 'node',
 	databaseName = 'kvstorage',
 	storageName = 'storage',
-	databaseBindings
+	databaseBinding
 	}:{
 		runtime?:string,
 		storageName?:string,
 		databaseName?:string,
-		databaseBindings?:any
+		databaseBinding?:any
 	}): Promise<any> {
 
 	function isAlphanumeric(str:string) {
@@ -24,36 +24,47 @@ export async function KVStorage({
 
 	switch(runtime.toLowerCase()){
 		case 'node':
-			let nodepkg = './node-kv-storage'
-		    if(typeof caches !== "undefined" && typeof global === "undefined" && typeof window === "undefined")nodepkg = ''
-			const runnode = await import(nodepkg)
-			const dbnode = await runnode.NodeKVStorage.init({
-				dataDirName:databaseName,
-				storageName
-			})
-			return dbnode
+		    if(typeof caches === "undefined" && typeof global !== "undefined" && typeof window === "undefined"){
+				let nodepkg = './kv-storage-module'
+				const runnode = await import(nodepkg)
+				const dbnode = await runnode.KVStorageModule.init({
+					dataDirName:databaseName,
+					storageName
+				})
+				return dbnode
+			}
 			break
 		case 'deno':
-			let denopkg = './deno-kv-storage.ts'
-			const rundeno = await import(denopkg)
-			const dbdeno = await rundeno.DenoKVStorage.init({
-				dataDirName:databaseName,
-				storageName
-			})
-			return dbdeno
+			if(typeof caches !== "undefined" && typeof global === "undefined" && typeof window !== "undefined"){
+				let rundeno
+				try{
+					const url = './kv-storage-module.ts'
+					rundeno = await import(url)
+				}catch{
+					const url = './kv-storage-module.js'
+					rundeno = await import(url)
+				}
+				const dbdeno = await rundeno.KVStorageModule.init({
+					dataDirName:databaseName,
+					storageName
+				})
+				return dbdeno
+			}
 			break
 		case 'bun':
-			let bunpkg = './bun-kv-storage'
-			const runbun = await import(bunpkg)
-			const dbbun = await runbun.BunKVStorage.init({
-				dataDirName:databaseName,
-				storageName
-			})
-			return dbbun
+			if(typeof caches === "undefined" && typeof global !== "undefined" && typeof window === "undefined"){
+				let bunpkg = './kv-storage-module'
+				const runbun = await import(bunpkg)
+				const dbbun = await runbun.KVStorageModule.init({
+					dataDirName:databaseName,
+					storageName
+				})
+				return dbbun
+			}
 			break
 		case 'browser':
 			if(typeof window !== "undefined" && typeof window.document !== "undefined"){
-				const dbbrowser = BrowserKVStorage.init({
+				const dbbrowser = KVStorageBrowser.init({
 					databaseName,
 					storageName
 				})
@@ -61,12 +72,13 @@ export async function KVStorage({
 			}
 			break
 		case 'cloudflare':
-			if(typeof caches !== "undefined" && typeof global === "undefined" && typeof window === "undefined")console.log('cloudflare')
-			const dbcloudflare = await CloudflareKVStorage.init({
-				databaseBindings,
-				storageName
-			})
-			return dbcloudflare
+			if(typeof caches !== "undefined" && typeof global === "undefined" && typeof window === "undefined"){
+				const dbcloudflare = await KVStorageCloudflare.init({
+					databaseBinding,
+					storageName
+				})
+				return dbcloudflare
+			}
 			break
 		default:
 			showError('Runtime unknown')
@@ -74,20 +86,20 @@ export async function KVStorage({
 
 }
 
-class CloudflareKVStorage{
+class KVStorageCloudflare{
 
 	private _storageName:string
-	private _databaseBindings:any
+	private _databaseBinding:any
 	
 	private constructor({
-		databaseBindings,
+		databaseBinding,
 		storageName
 	}:{
-		databaseBindings:any,
+		databaseBinding:any,
 		storageName:string
 	}){
 
-		this._databaseBindings = databaseBindings
+		this._databaseBinding = databaseBinding
 		this._storageName = storageName
 	}
 
@@ -100,12 +112,12 @@ class CloudflareKVStorage{
 	}
 	
 	public static async init({
-		databaseBindings,
+		databaseBinding,
 		storageName,
 	}:{
-		databaseBindings:any,
+		databaseBinding:any,
 		storageName:string
-	}): Promise<CloudflareKVStorage>{
+	}): Promise<KVStorageCloudflare>{
 	
 		function isAlphanumeric(str:string) {
 		  return /^[a-zA-Z0-9]+$/.test(str);
@@ -117,25 +129,25 @@ class CloudflareKVStorage{
 
 		if(!isAlphanumeric(storageName))showError('storageName must be Alphanumeric')		
 		
-		const stmt = databaseBindings.prepare('CREATE TABLE IF NOT EXISTS '+storageName+' (key text NOT NULL PRIMARY KEY,value text NOT NULL)')
+		const stmt = databaseBinding.prepare('CREATE TABLE IF NOT EXISTS '+storageName+' (key text NOT NULL PRIMARY KEY,value text NOT NULL)')
 		
 		const values = await stmt.run()
 		
-		return new CloudflareKVStorage({databaseBindings,storageName})
+		return new KVStorageCloudflare({databaseBinding,storageName})
 	}	
 	
 	public async put(key:string,value:string){
 		
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			
-			const stmt = this._databaseBindings.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
+			const stmt = this._databaseBinding.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
 			const values = await stmt.first()
 			if(values == null){
-			  const stmt = this._databaseBindings.prepare('INSERT INTO '+this._storageName+' (key,value) VALUES (?1,?2)').bind(key,value);
+			  const stmt = this._databaseBinding.prepare('INSERT INTO '+this._storageName+' (key,value) VALUES (?1,?2)').bind(key,value);
 			  const values = await stmt.run()
 			  return values.success
 			}else{
-			  const stmt = this._databaseBindings.prepare('UPDATE '+this._storageName+' SET value = ?2 WHERE key = ?1').bind(key,value);
+			  const stmt = this._databaseBinding.prepare('UPDATE '+this._storageName+' SET value = ?2 WHERE key = ?1').bind(key,value);
 			  const values = await stmt.run()
 			  return values.success
 			}
@@ -146,7 +158,7 @@ class CloudflareKVStorage{
 		
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 
-			const stmt = this._databaseBindings.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
+			const stmt = this._databaseBinding.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
 			const values = await stmt.first();
 			let output
 			if(values == null){
@@ -162,7 +174,7 @@ class CloudflareKVStorage{
 		
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			
-			const stmt = this._databaseBindings.prepare('DELETE FROM '+this._storageName+' WHERE key = ?1').bind(key);
+			const stmt = this._databaseBinding.prepare('DELETE FROM '+this._storageName+' WHERE key = ?1').bind(key);
 			const values = await stmt.run();
 			return values.success				
 		
@@ -172,7 +184,7 @@ class CloudflareKVStorage{
 		
 			if(!this.isAlphanumeric(key))this.showError('Key must be Alphanumeric')
 			
-			const stmt = this._databaseBindings.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
+			const stmt = this._databaseBinding.prepare('SELECT value FROM '+this._storageName+' WHERE key = ?1').bind(key);
 			const values = await stmt.run();
 			let output
 			if(values.results == 0){
@@ -186,7 +198,7 @@ class CloudflareKVStorage{
 	
 	public async list(){
 		
-			const stmt = this._databaseBindings.prepare('SELECT key FROM '+this._storageName).bind();
+			const stmt = this._databaseBinding.prepare('SELECT key FROM '+this._storageName).bind();
 			const values = await stmt.all();
 			let output
 			if(values.success){
@@ -207,7 +219,7 @@ class CloudflareKVStorage{
 	}
 }
 
-class BrowserKVStorage{
+class KVStorageBrowser{
 
 	private _databaseName:string
 	private _storageName:string
@@ -246,7 +258,7 @@ class BrowserKVStorage{
 	}:{
 		databaseName?:string,
 		storageName:string
-	}): Promise<BrowserKVStorage>{
+	}): Promise<KVStorageBrowser>{
 	
 		function isAlphanumeric(str:string) {
 		  return /^[a-zA-Z0-9]+$/.test(str);
@@ -296,7 +308,7 @@ class BrowserKVStorage{
 		
 		const iDB = await createdb
 		
-		return new BrowserKVStorage({databaseName,storageName,dbVersion,iDB})
+		return new KVStorageBrowser({databaseName,storageName,dbVersion,iDB})
 	}	
 	
 	public async put(key:string,value:string){
