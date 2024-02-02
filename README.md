@@ -87,7 +87,7 @@ import {KVStorage} from 'kv-storage'
 
 void async function main() {
 	const db = await KVStorage({
-		runtime:'node',//node | bun
+		runtime:'node',//node | deno | bun
 		storageName:'storage'
 	})
 	
