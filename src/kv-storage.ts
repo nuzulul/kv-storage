@@ -78,6 +78,7 @@ export async function KVStorage({
 			break
 		case 'browser':
 			if(typeof window !== "undefined" && typeof window.document !== "undefined"){
+				if(databaseName === 'kvstorage')databaseName = storageName
 				const dbbrowser = KVStorageBrowser.init({
 					databaseName,
 					storageName
