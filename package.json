@@ -11,30 +11,27 @@
     }
   },
   "scripts": {
-		"dev-node": "nodemon -e js,ts --watch src --watch test --exec \"npm run build && npm start\"",
+		"start": "npm run dev-node",
+
+		"build-dev-cjs": "npm run removedir public && tsc -p tsconfig-devcjs.json",
+		"build-dev-esm": "npm run removedir public && tsc -p tsconfig-devesm.json",
+		"dev-node": "nodemon -e js,ts --watch src --watch test --exec \"npm run build-dev-cjs && node public/test/server.js\"",
+		"dev-ts-node": "nodemon -e js,ts --watch src --watch test --exec \"npm run build-dev-cjs && ts-node public/test/server.js\"",
 		"dev-bun": "nodemon -e js,ts --watch src --watch test --exec \"bun run test/server.ts\"",
 		"dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write test/test-deno/server-deno.ts\"",
-		"dev-cf": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-browser.json && wrangler dev\"",
-		"dev-browser": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-browser.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.js && ts-node test/server-browser.ts\"",
-		"build-win": "npm run prepare-build-win && tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.umd.js && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
-		"gh-deploydoc": "npm run typedoc && git add docs -f && git commit -m \"docs\" && npm run gh-deploy && git reset --soft HEAD~ && git restore --staged .",
-
-		"build": "tsc -p tsconfig-dev.json",
-		"start": "node public/test/server.js",
-		"start-mjs": "npm run build && node public/test/server-mjs.js",
-		"dev-umd": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run prepare-public && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.js && ts-node test/server-browser.ts\"",
-		"dev-mjs": "nodemon -e js,ts --watch src --watch test --exec \"npm run start-mjs\"",
-		"prepare-build": "if exist .\\dist (echo ok) && mkdir dist && del /S /Q .\\dist\\*",
-		"prepare-build-win": "if not exist .\\dist (mkdir dist) else (rmdir /S /Q .\\dist\\)",
-		"prepare-typedoc": "if not exist .\\docs (mkdir docs) else (rmdir /S /Q .\\docs\\)",
-		"prepare-public": "if not exist .\\public (mkdir public) else (rmdir /S /Q .\\public\\)",
-		"typedoc": "npm run prepare-typedoc && typedoc src/kv-storage.ts src/kv-storage-module.ts",
-		"gh-deploy": "git push origin :gh-pages && git subtree push --prefix docs origin gh-pages",
-		"gh-deploy-init": "git push origin && git subtree push --prefix docs origin gh-pages",
+		"dev-cf": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run build-dev-esm && wrangler dev\"",
+		"dev-browser": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run build-dev-esm && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.dev.js && ts-node test/server-browser.ts\"",
 		
-		"dev-ts": "nodemon -e js,ts --watch src --watch test --exec \"ts-node test/server\"",
-		"test": "echo \"Error: no test specified\" && exit 1"
-    
+		"removedir": "node -e \"var fs = require('fs'); try{process.argv.slice(1).map((fpath) => fs.rmdirSync(fpath, { recursive: true }))}catch(err){console.log(`Dist not found`)}; process.exit(0);\"",
+		"build-all":"tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.umd.js && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
+		"build":"npm run removedir dist && npm run build-all",
+		
+		"gh-deploy-init": "git push origin && git subtree push --prefix docs origin gh-pages",
+		"gh-deploy": "git push origin :gh-pages && git subtree push --prefix docs origin gh-pages",
+		"typedoc": "npm run removedir docs && typedoc src/kv-storage.ts src/kv-storage-module.ts",
+		"gh-deploydoc": "npm run typedoc && git add docs -f && git commit -m \"docs\" && npm run gh-deploy && git reset --soft HEAD~ && git restore --staged .",
+		
+		"test": "npm run dev-node"
   },
   "files": [
     "dist/",
