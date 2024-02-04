@@ -1,6 +1,6 @@
 {
   "name": "kv-storage",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
   "main": "dist/cjs/kv-storage.js",
   "module": "dist/mjs/kv-storage.js",

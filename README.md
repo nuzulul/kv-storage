@@ -21,7 +21,7 @@ npm install kv-storage
 ```
 CDN (browser)
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -36,7 +36,7 @@ const {KVStorage} = require('kv-storage')
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
-import {KVStorage} from 'npm:kv-storage@0.0.7'
+import {KVStorage} from 'npm:kv-storage@0.0.8'
 
 //Node, Browser, Deno & Bun Initialization
 const db = await KVStorage({
@@ -53,7 +53,7 @@ const db = await KVStorage({
 ```
 CDN
 ```javascript
-//Browser using CDN
+//Browser initialization if using CDN
 
 const db = await kvstorage.KVStorage({
 	runtime:'browser',
@@ -99,7 +99,7 @@ void async function main() {
 }()
 ```
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/umd/kv-storage.js"></script>
 <script>
 //Browser using CDN example
 
@@ -121,7 +121,7 @@ void async function main() {
 ```javascript
 <script type="module">
 //Browser ES Modules example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.7/dist/mjs/kv-storage.js'
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/mjs/kv-storage.js'
 
 void async function main() {
 	const db = await KVStorage({
@@ -139,7 +139,7 @@ void async function main() {
 ```
 ```javascript
 //Deno example
-import {KVStorage} from 'npm:kv-storage@0.0.7'
+import {KVStorage} from 'npm:kv-storage@0.0.8'
 
 void async function main() {
 	const db = await KVStorage({
@@ -189,9 +189,9 @@ export default {
 
 ```javascript
 await init({
-	runtime?:string,
-	storageName?:string,
-	databaseBinding?:any
+	runtime,
+	storageName,
+	databaseBinding
 })
 ```
 ```
@@ -200,22 +200,22 @@ storageName = Alphanumeric storage name
 databaseBinding = Cloudflare only D1 database binding env
 ```
 Supported runtime :
-- [x] `node`
-- [x] `deno` need `--allow-read --allow-write`
+- [x] `node` use file storage
+- [x] `deno` use file storage need `--allow-read --allow-write`
 - [x] `browser` use IndexedDB
-- [x] `bun`
+- [x] `bun` use file storage
 - [x] `cloudflare` workers use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database) example [wrangler.toml](https://github.com/nuzulul/kv-storage/blob/main/wrangler.toml)
 
 ### Write key-value pairs
 
 ```javascript
-await put(key:string,value:string)
+await put(key,value)
 ```
 The put() method returns a Promise that you should await on to verify a successful update, resolve to `true` or `false`
 ### Read key-value pairs
 
 ```javascript
-await get(key:string)
+await get(key)
 ```
 The get() method returns a promise you can await on to get the value, resolve to the value or `false`
 
@@ -226,12 +226,12 @@ await list()
 ```
 Use a list operation to view all the keys that live in a given storage, return a promise which resolves with an object consist of:
 * keys = Array of keys
-* complete = True if operation complete
+* complete = true if operation complete
 
 ### Delete key-value pairs
 
 ```javascript
-await delete(key:string)
+await delete(key)
 ```
 
 To delete a key-value pair, call the delete() method, resolve to `true` or `false`
@@ -239,11 +239,11 @@ To delete a key-value pair, call the delete() method, resolve to `true` or `fals
 ### Has key-value pairs
 
 ```javascript
-await has(key:string)
+await has(key)
 ```
 
 To check for the existence of a key, resolve to `true` or `false`
 
 ## License
 
-MIT
+[MIT](https://github.com/nuzulul/kv-storage/blob/main/LICENSE)
