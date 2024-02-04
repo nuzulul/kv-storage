@@ -27,11 +27,11 @@ export async function KVStorage({
 		    if(typeof caches === "undefined" && typeof global !== "undefined" && typeof window === "undefined"){
                 let runnode;
                 try {
-                    const url = './kv-storage-module';
+                    const url = './kv-storage-module'
                     runnode = await import(url);
                 }
                 catch {
-                    const url = './kv-storage-module.js';
+                    const url = './kv-storage-module.js'
                     runnode = await import(url);
                 }
 				const dbnode = await runnode.KVStorageModule.init({

@@ -139,3 +139,4 @@ docs/
 kvstorage/
 .dev.vars
 .wrangler/
+package-backup.json

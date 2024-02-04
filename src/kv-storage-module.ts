@@ -87,7 +87,11 @@ export class KVStorageModule{
 			const keyFilePath = this._storageDir+'/'+key
 			
 				  fs.unlink(keyFilePath,(err)=>{
-					if (err) {resolve(false)}else{resolve(true)}
+            if (err) {
+              fs.stat(keyFilePath, (err)=>{
+                if (err) {resolve(true)}else{resolve(false)}
+              });
+            }else{resolve(true)}
 				  });
 				
 		})

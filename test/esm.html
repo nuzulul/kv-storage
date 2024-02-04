@@ -1,8 +1,9 @@
 <html>
-<body>
-<p>open console</p>
+<body style="margin:0;padding:0">
+<div id="out">open console</div>
 <script type="module">
-import {KVStorage} from './../public/src/kv-storage.js'
+import {KVStorage} from './../public/esm/src/kv-storage.js'
+import {test} from './../public/esm/test/test-unit.js'
 
 void async function main() {
 	
@@ -11,13 +12,9 @@ void async function main() {
 		storageName:'storage'
 	})
 	
-	console.log(await db.put('yes','no'))
-	console.log(await db.get('yes'))
-	console.log(await db.delete('yes'))
-	console.log(await db.get('yes'))
-	console.log(await db.put('yes1','no1'))
-	console.log(await db.list())
-	console.log(await db.has('key'))
+    const data = await test(db)
+    console.log(data)
+    document.getElementById("out").innerHTML = "<textarea style='width:100vw;height:100vh'>"+data+"</textarea>"
 }()
 </script>	
 </body>

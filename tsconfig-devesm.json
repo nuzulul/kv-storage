@@ -2,7 +2,7 @@
     "extends": "./tsconfig-base.json",
     "compilerOptions": {
         "module": "esnext",
-        "outDir": "public",
+        "outDir": "public/esm",
         "target": "esnext",
         "rootDir": "."
     },
