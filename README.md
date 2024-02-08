@@ -77,6 +77,7 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.delete('key'))
 	console.log(await db.has('key'))
+	console.log(await db.clear())
 }()
 ```
 
@@ -95,6 +96,7 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.delete('key'))
 	console.log(await db.has('key'))
+	console.log(await db.clear())
 }()
 ```
 ```javascript
@@ -113,6 +115,7 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.delete('key'))
 	console.log(await db.has('key'))
+	console.log(await db.clear())
 }()
 </script>
 ```
@@ -133,6 +136,7 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.delete('key'))
 	console.log(await db.has('key'))
+	console.log(await db.clear())
 }()
 </script>
 ```
@@ -151,6 +155,7 @@ void async function main() {
 	console.log(await db.list())
 	console.log(await db.delete('key'))
 	console.log(await db.has('key'))
+	console.log(await db.clear())
 }()
 ```
 
@@ -173,6 +178,7 @@ export default {
 		data.push(await db.has('key'))
 		data.push(await db.list())
 		data.push(await db.delete('key'))
+		data.push(await db.clear())
 		return new Response(JSON.stringify(data, null, 2)) 
 	} 
 }
@@ -240,8 +246,15 @@ To delete a key-value pair, call the delete() method, resolve to `true` or `fals
 ```javascript
 await has(key)
 ```
-
 To check for the existence of a key, resolve to `true` or `false`
+
+### Clear storage
+
+```javascript
+await clear()
+```
+To delete all key value pairs, resolve to `true` or `false`
+
 
 ## License
 

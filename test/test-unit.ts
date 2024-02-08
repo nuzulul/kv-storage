@@ -41,6 +41,21 @@ export async function test(db:any){
 		obj={delete:await db.delete('yesyes'),expected: true}
 		if(obj.delete == obj.expected){obj.passed = true}else{obj.passed = false}				
 		data.push(obj)
+
+		//test for create new kv
+		obj={put:await db.put('yesyesyes','no'),expected: true}
+		if(obj.put == obj.expected){obj.passed = true}else{obj.passed = false}
+		data.push(obj)
+
+		//test for clear all kv
+		obj={clear:await db.clear(),expected: true}
+		if(obj.clear == obj.expected){obj.passed = true}else{obj.passed = false}
+		data.push(obj)
+
+		//test list empty storage
+		obj={list:await db.list(),expected:{keys:[],complete:true}}
+		if(JSON.stringify(obj.list) == JSON.stringify(obj.expected)){obj.passed = true}else{obj.passed = false}		
+		data.push(obj)
 		
 		return JSON.stringify(data, null, 2)
 }

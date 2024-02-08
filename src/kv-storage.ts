@@ -232,6 +232,15 @@ class KVStorageCloudflare{
 			}
 			return output
 	}
+
+	public async clear(){
+			
+			const stmt = this._databaseBinding.prepare('DELETE FROM '+this._storageName);
+			const values = await stmt.run();
+			return values.success				
+		
+	}
+
 }
 
 class KVStorageBrowser{
@@ -400,4 +409,19 @@ class KVStorageBrowser{
 			}
 		})
 	}
+
+	public async clear(){
+		return new Promise((resolve) => {
+			let transaction = this._iDB.transaction(this._storageName, "readwrite")
+			let request = transaction.objectStore(this._storageName).clear()
+			request.onsuccess = function(event) {
+				resolve(true)
+			}
+			request.onerror = function() {
+				resolve(false)
+			}
+				
+		})
+	}
+
 }

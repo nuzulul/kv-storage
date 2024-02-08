@@ -87,11 +87,11 @@ export class KVStorageModule{
 			const keyFilePath = this._storageDir+'/'+key
 			
 				  fs.unlink(keyFilePath,(err)=>{
-            if (err) {
-              fs.stat(keyFilePath, (err)=>{
-                if (err) {resolve(true)}else{resolve(false)}
-              });
-            }else{resolve(true)}
+						if (err) {
+						  fs.stat(keyFilePath, (err)=>{
+							if (err) {resolve(true)}else{resolve(false)}
+						  });
+						}else{resolve(true)}
 				  });
 				
 		})
@@ -122,4 +122,24 @@ export class KVStorageModule{
 			  });
 		})
 	}
+	
+	public async clear(){
+		return new Promise((resolve) => {
+			  fs.readdir(this._storageDir,(err,files)=>{
+				if (err) {resolve(false)}else{
+
+					let success = true
+					for (const file of files){
+						const keyFilePath = this._storageDir+'/'+file
+						fs.unlink(keyFilePath,(err)=>{
+							if (err) success = false
+						});
+					}
+					resolve(success)
+					
+				}
+			  });
+		})
+	}	
+	
 }
