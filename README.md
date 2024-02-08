@@ -1,5 +1,5 @@
 # kv-storage
-Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers
+💾 Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers
 
 [![NPM](https://nodei.co/npm/kv-storage.png?mini=true)](https://www.npmjs.com/package/kv-storage)
 [![npm version](https://badge.fury.io/js/kv-storage.svg)](https://www.npmjs.com/package/kv-storage)
@@ -20,7 +20,7 @@ npm install kv-storage
 ```
 CDN (browser)
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.9/dist/umd/kv-storage.js"></script>
 ```
 
 ## Initialization
@@ -35,7 +35,7 @@ const {KVStorage} = require('kv-storage')
 import {KVStorage} from 'kv-storage'
 
 //Deno import style
-import {KVStorage} from 'npm:kv-storage@0.0.8'
+import {KVStorage} from 'npm:kv-storage@0.0.9'
 
 //Node, Browser, Deno & Bun Initialization
 const db = await KVStorage({
@@ -100,7 +100,7 @@ void async function main() {
 }()
 ```
 ```javascript
-<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/umd/kv-storage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/kv-storage@0.0.9/dist/umd/kv-storage.js"></script>
 <script>
 //Browser using CDN example
 
@@ -123,7 +123,7 @@ void async function main() {
 ```javascript
 <script type="module">
 //Browser ES Modules example
-import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.8/dist/mjs/kv-storage.js'
+import {KVStorage} from 'https://cdn.jsdelivr.net/npm/kv-storage@0.0.9/dist/mjs/kv-storage.js'
 
 void async function main() {
 	const db = await KVStorage({
@@ -142,7 +142,7 @@ void async function main() {
 ```
 ```javascript
 //Deno example
-import {KVStorage} from 'npm:kv-storage@0.0.8'
+import {KVStorage} from 'npm:kv-storage@0.0.9'
 
 void async function main() {
 	const db = await KVStorage({

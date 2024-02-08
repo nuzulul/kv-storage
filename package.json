@@ -1,7 +1,7 @@
 {
   "name": "kv-storage",
-  "version": "0.0.8",
-  "description": "Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
+  "version": "0.0.9",
+  "description": "💾 Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers",
   "main": "dist/cjs/kv-storage.js",
   "module": "dist/mjs/kv-storage.js",
   "exports": {
@@ -58,13 +58,10 @@
     "nosql-database",
     "file-storage",
     "kv-storage",
-    "key-value-storage",
-    "node-key-value-storage",
-    "node-kv-storage",
-    "browser-kv-storage",
-    "deno-kv-storage",
-    "bun-kv-storage",
-    "cloudflare-workers"
+    "cloudflare-workers",
+	"file-database",
+	"storage",
+	"db"
   ],
   "author": "Nuzulul Zulkarnain",
   "license": "MIT",
