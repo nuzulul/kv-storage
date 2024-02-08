@@ -3,15 +3,14 @@ Create data storage that uses a simple key-value method for Node, Browser, Deno,
 
 [![NPM](https://nodei.co/npm/kv-storage.png?mini=true)](https://www.npmjs.com/package/kv-storage)
 [![npm version](https://badge.fury.io/js/kv-storage.svg)](https://www.npmjs.com/package/kv-storage)
+
+[Demo](https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld)
+
 ## Features
 
 * ✅ 0 Dependencies
 * ✅ NoSQL Database
 * ✅ Lightwight
-
-## Demo
-
-[https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld](https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld)
 
 ## Installation
 
@@ -55,7 +54,7 @@ CDN
 ```javascript
 //Browser initialization if using CDN
 
-const db = await kvstorage.KVStorage({
+const db = await KVStorage({
 	runtime:'browser',
 	storageName:'storage'
 })
@@ -104,7 +103,7 @@ void async function main() {
 //Browser using CDN example
 
 void async function main() {
-	const db = await kvstorage.KVStorage({
+	const db = await KVStorage({
 		runtime:'browser',
 		storageName:'storage'
 	})
@@ -200,10 +199,10 @@ storageName = Alphanumeric storage name
 databaseBinding = Cloudflare only D1 database binding env
 ```
 Supported runtime :
-- [x] `node` use file storage
-- [x] `deno` use file storage need `--allow-read --allow-write`
-- [x] `browser` use IndexedDB
-- [x] `bun` use file storage
+- [x] `node` use File System
+- [x] `deno` use File System need `--allow-read --allow-write`
+- [x] `browser` use [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+- [x] `bun` use File System
 - [x] `cloudflare` workers use D1 Database [docs](https://developers.cloudflare.com/d1/get-started/#4-bind-your-worker-to-your-d1-database) example [wrangler.toml](https://github.com/nuzulul/kv-storage/blob/main/wrangler.toml)
 
 ### Write key-value pairs
