@@ -2,12 +2,12 @@ import typescript from '@rollup/plugin-typescript';
 
 export default [
 {
-  input: 'src/kv-storage.ts',
+  input: 'test/umd.ts',
   output: [
     {
       file: 'public/umd/kv-storage.umd.js',
       format: 'umd',
-      name: 'kvstorage',
+      name: 'KVStorage',
 	  inlineDynamicImports:true,
     },
     {

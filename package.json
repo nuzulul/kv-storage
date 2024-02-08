@@ -21,6 +21,7 @@
 		"dev-deno": "nodemon -e js,ts --watch src --watch test --exec \"deno run --allow-read --allow-write test/test-deno/server-deno.ts\"",
 		"dev-cf": "nodemon -e js,ts,html --watch src --watch test --exec \"wrangler dev\"",
 		"dev-browser": "nodemon -e js,ts,html --watch src --watch test --exec \"npm run build-dev-esm && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.dev.js && ts-node test/server-browser.ts\"",
+		"dev":"npm run test-all",
 		
 		"removedir": "node -e \"var fs = require('fs'); try{process.argv.slice(1).map((fpath) => fs.rmdirSync(fpath, { recursive: true }))}catch(err){console.log(`Dist not found`)}; process.exit(0);\"",
 		"build-all":"tsc -p tsconfig-mjs.json && tsc -p tsconfig-cjs.json && tsc -p tsconfig-umd.json && rollup -c public/config/rollup.config.umd.js && echo {\"type\": \"commonjs\"}>dist\\cjs\\package.json && echo {\"type\": \"module\"}>dist\\mjs\\package.json",
@@ -28,13 +29,14 @@
 
 		"backup": "node -e \"var fs = require('fs'); try{fs.copyFileSync('package.json', 'package-backup.json')}catch(err){console.log(`Copy failed`)}; process.exit(0);\"",
 		"restore": "node -e \"var fs = require('fs'); try{fs.copyFileSync('package-backup.json', 'package.json')}catch(err){console.log(`Copy failed`)}; process.exit(0);\"",
-		"prepublish":"npm run backup && npm pkg delete devDependencies",
+		"prepublishOnly":"npm run backup && npm pkg delete devDependencies",
 		"postpublish":"npm run restore",
 		
 		"gh-deploy-init": "git push origin && git subtree push --prefix docs origin gh-pages",
 		"gh-deploy": "git push origin :gh-pages && git subtree push --prefix docs origin gh-pages",
 		"typedoc": "npm run removedir docs && typedoc src/kv-storage.ts src/kv-storage-module.ts",
 		"gh-deploydoc": "npm run typedoc && git add docs -f && git commit -m \"docs\" && npm run gh-deploy && git reset --soft HEAD~ && git restore --staged .",
+		"doc":"npm run gh-deploydoc",
 		
 		"test-all": "nodemon -e js,ts --watch src --watch test --exec \"npm run build-dev-cjs && node public/cjs/test/test-all.js\"",
 		"test": "npm run test-all"
