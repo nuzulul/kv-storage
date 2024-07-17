@@ -1,9 +1,6 @@
 # kv-storage
 💾 Create data storage that uses a simple key-value method for Node, Browser, Deno, Bun, Cloudflare Workers
 
-[![NPM](https://nodei.co/npm/kv-storage.png?mini=true)](https://www.npmjs.com/package/kv-storage)
-[![npm version](https://badge.fury.io/js/kv-storage.svg)](https://www.npmjs.com/package/kv-storage)
-
 [Demo](https://codesandbox.io/p/devbox/simple-kv-storage-pzr9ld)
 
 ## Features
@@ -258,4 +255,8 @@ To delete all key value pairs, resolve to `true` or `false`
 
 ## License
 
-[MIT](https://github.com/nuzulul/kv-storage/blob/main/LICENSE)
+MIT
+
+## Maintainers
+
+[Nuzulul Zulkarnain](https://github.com/nuzulul)
